@@ -8,11 +8,16 @@ const __dirname = path.resolve();
 
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+
 //Auth Route
 import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
+import { connectDB } from "./lib/db.js";
 
 //Auth API
 app.use("/api/auth", authRoutes);
+app.use("/api/message", messageRoutes);
 
 //Deployment
 if (process.env.NODE_ENV === "production") {
@@ -23,4 +28,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => console.log(`Server is listening on PORT: ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is listening on PORT: ${PORT}`);
+  connectDB();
+});
