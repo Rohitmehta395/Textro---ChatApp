@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import cookieParser from "cookie-parser";
 import { ENV } from "./lib/env.js";
 
 const app = express();
@@ -8,6 +9,9 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cookieParser());
 
 //Auth Route
 import authRoutes from "./routes/auth.route.js";
