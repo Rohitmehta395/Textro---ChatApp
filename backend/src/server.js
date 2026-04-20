@@ -1,12 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
 import express from "express";
 import path from "path";
+import { ENV } from "./lib/env.js";
 
 const app = express();
 const __dirname = path.resolve();
 
-const PORT = process.env.PORT || 3000;
+const PORT = ENV.PORT;
 
 app.use(express.json());
 
@@ -20,7 +19,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 
 //Deployment
-if (process.env.NODE_ENV === "production") {
+if (ENV.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   app.use((req, res) => {
