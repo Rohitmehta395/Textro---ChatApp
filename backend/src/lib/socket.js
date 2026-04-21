@@ -6,11 +6,7 @@ import { socketAuthMiddleware } from "../middleware/socket.auth.middleware.js";
 
 const app = express();
 const server = http.createServer(app);
-const allowedOrigins = new Set([
-  ENV.CLIENT_URL,
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-]);
+const allowedOrigins = new Set([ENV.CLIENT_URL, "http://localhost:5173", "http://127.0.0.1:5173"]);
 
 const isAllowedOrigin = (origin) => {
   if (!origin) return true;
@@ -30,9 +26,7 @@ const io = new Server(server, {
         return callback(null, true);
       }
 
-      return callback(
-        new Error(`Socket.IO CORS blocked for origin: ${origin}`),
-      );
+      return callback(new Error(`Socket.IO CORS blocked for origin: ${origin}`));
     },
     credentials: true,
   },
