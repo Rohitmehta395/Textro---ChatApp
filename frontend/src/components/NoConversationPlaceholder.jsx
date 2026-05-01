@@ -1,15 +1,29 @@
-import { MessageCircleIcon } from "lucide-react";
+import { MessageCircleIcon, LaptopIcon } from "lucide-react";
 
 const NoConversationPlaceholder = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center p-6">
-      <div className="size-20 bg-cyan-500/20 rounded-full flex items-center justify-center mb-6">
-        <MessageCircleIcon className="size-10 text-cyan-400" />
+    <div className="flex flex-col items-center justify-center h-full text-center p-8">
+      <div className="max-w-md flex flex-col items-center">
+        <div className="mb-10 relative">
+          <div className="size-32 bg-[#202c33] rounded-full flex items-center justify-center">
+            <MessageCircleIcon className="size-16 text-[#8696a0]" />
+          </div>
+        </div>
+        
+        <h3 className="text-[32px] font-light text-[#e9edef] mb-4">
+          Textro Web
+        </h3>
+        
+        <p className="text-[#8696a0] text-[14px] leading-relaxed mb-10">
+          Send and receive messages with style and speed.<br/>
+          Use Textro on all your devices at the same time.
+        </p>
+        
+        <div className="flex items-center gap-2 text-[#8696a0] text-[14px]">
+          <LaptopIcon className="size-4" />
+          <span>End-to-end encrypted</span>
+        </div>
       </div>
-      <h3 className="text-xl font-semibold text-slate-200 mb-2">Select a conversation</h3>
-      <p className="text-slate-400 max-w-md">
-        Choose a contact from the sidebar to start chatting or continue a previous conversation.
-      </p>
     </div>
   );
 };

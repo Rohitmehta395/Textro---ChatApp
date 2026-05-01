@@ -1,4 +1,4 @@
-import { XIcon } from "lucide-react";
+import { XIcon, MoreVerticalIcon, SearchIcon } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
@@ -20,26 +20,42 @@ function ChatHeader() {
   }, [setSelectedUser]);
 
   return (
-    <div
-      className="flex justify-between items-center bg-slate-800/50 border-b
-   border-slate-700/50 max-h-[84px] px-6 flex-1"
-    >
-      <div className="flex items-center space-x-3">
-        <div className={`avatar ${isOnline ? "online" : "offline"}`}>
-          <div className="w-12 rounded-full">
-            <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
-          </div>
+    <div className="flex justify-between items-center bg-[#202c33] py-2 px-4 h-[60px] border-b border-black/10">
+      <div className="flex items-center gap-3">
+        {/* AVATAR */}
+        <div className="size-10 rounded-full overflow-hidden">
+          <img 
+            src={selectedUser.profilePic || "/avatar.png"} 
+            alt={selectedUser.fullName} 
+            className="size-full object-cover"
+          />
         </div>
 
-        <div>
-          <h3 className="text-slate-200 font-medium">{selectedUser.fullName}</h3>
-          <p className="text-slate-400 text-sm">{isOnline ? "Online" : "Offline"}</p>
+        {/* INFO */}
+        <div className="flex flex-col">
+          <h3 className="text-[#e9edef] font-medium text-[16px] leading-tight">
+            {selectedUser.fullName}
+          </h3>
+          <p className="text-[#8696a0] text-[13px]">
+            {isOnline ? "Online" : "Away"}
+          </p>
         </div>
       </div>
 
-      <button onClick={() => setSelectedUser(null)}>
-        <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" />
-      </button>
+      <div className="flex items-center gap-1">
+        <button className="p-2 text-[#aebac1] hover:bg-white/5 rounded-full transition-all outline-none">
+          <SearchIcon className="size-5" />
+        </button>
+        <button className="p-2 text-[#aebac1] hover:bg-white/5 rounded-full transition-all outline-none">
+          <MoreVerticalIcon className="size-5" />
+        </button>
+        <button 
+          onClick={() => setSelectedUser(null)}
+          className="p-2 text-[#aebac1] hover:bg-white/5 rounded-full transition-all md:hidden outline-none"
+        >
+          <XIcon className="size-5" />
+        </button>
+      </div>
     </div>
   );
 }

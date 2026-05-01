@@ -81,6 +81,7 @@ export const useChatStore = create((set, get) => ({
       receiverId: selectedUser._id,
       text: messageData.text,
       image: messageData.image,
+      audio: messageData.audio,
       createdAt: new Date().toISOString(),
       isOptimistic: true, // flag to identify optimistic messages (optional)
     };
@@ -94,6 +95,17 @@ export const useChatStore = create((set, get) => ({
       // remove optimistic message on failure
       set({ messages: messages });
       toast.error(getErrorMessage(error, "Failed to send message"));
+    }
+  },
+
+  deleteMessage: async (messageId) => {
+    try {
+      await axiosInstance.delete(`/messages/delete/${messageId}`);
+      const messages = get().messages;
+      set({ messages: messages.filter((msg) => msg._id !== messageId) });
+      toast.success("Message deleted");
+    } catch (error) {
+      toast.error(getErrorMessage(error, "Failed to delete message"));
     }
   },
 
@@ -117,10 +129,16 @@ export const useChatStore = create((set, get) => ({
         notificationSound.play().catch((e) => console.log("Audio play failed:", e));
       }
     });
+
+    socket.on("messageDeleted", (messageId) => {
+      const currentMessages = get().messages;
+      set({ messages: currentMessages.filter((msg) => msg._id !== messageId) });
+    });
   },
 
   unsubscribeFromMessages: () => {
     const socket = useAuthStore.getState().socket;
     socket.off("newMessage");
+    socket.off("messageDeleted");
   },
 }));

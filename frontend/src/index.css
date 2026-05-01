@@ -2,34 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-@property --border-angle {
-  inherits: false;
-  initial-value: 0deg;
-  syntax: "<angle>";
+@layer base {
+  body {
+    @apply bg-[#0b141a] text-[#e9edef] antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* Custom Scrollbar - WhatsApp Style */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#374045] hover:bg-[#4a555c] transition-colors;
+  }
 }
 
-.input {
-  @apply w-full bg-slate-800/50 border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-transparent;
+@layer components {
+  .sidebar-bg {
+    @apply bg-[#111b21];
+  }
+
+  .chat-area-bg {
+    @apply bg-[#0b141a];
+  }
+
+  .input {
+    @apply w-full bg-[#2a3942] border-none rounded-lg py-2.5 pl-10 pr-4 text-[#d1d7db] placeholder-[#8696a0] focus:ring-0 outline-none;
+  }
+
+  .auth-btn {
+    @apply w-full bg-[#00a884] text-[#111b21] rounded-lg py-3 font-bold hover:bg-[#06cf9c] transition-all;
+  }
+
+  /* WhatsApp Bubble Tails (Simplified) */
+  .bubble-mine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -8px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid #005c4b;
+    border-bottom: 10px solid transparent;
+  }
+
+  .bubble-other::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-right: 10px solid #202c33;
+    border-bottom: 10px solid transparent;
+  }
 }
 
-.auth-input-icon {
-  @apply absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 size-5;
+@keyframes fade-in-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-.auth-input-label {
-  @apply block text-sm font-medium text-slate-300 mb-2;
-}
-
-.auth-badge {
-  @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-cyan-500/20 text-cyan-300;
-}
-
-.auth-btn {
-  @apply w-full bg-cyan-500 text-white rounded-lg py-2.5 font-medium
-  hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-500;
-}
-
-.auth-link {
-  @apply px-4 py-2 inline-block bg-cyan-500/10 rounded-lg text-cyan-400
-  hover:text-cyan-500 text-sm transition-colors;
+.animate-fade-in-up {
+  animation: fade-in-up 0.2s ease-out forwards;
 }
